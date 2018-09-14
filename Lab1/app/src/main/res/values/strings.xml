@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lab1</string>
+    <string name="notif">Push-notify</string>
+    <string name="search">Search</string>
+    <string name="fcam">Front camera</string>
+    <string name="bcam">Back camera</string>
+    <string name="camera">Launch camera</string>
+    <string name="browse">Browse pictures</string>
+</resources>
