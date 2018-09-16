@@ -12,6 +12,9 @@ import android.support.v4.app.NotificationManagerCompat
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.EditText
+import android.content.Intent
+import android.net.Uri
 
 class MainActivity : Activity() {
     private var notificationManager: NotificationManagerCompat?= null
@@ -29,6 +32,14 @@ class MainActivity : Activity() {
         }
         notification = builder.build()
         notificationManager = NotificationManagerCompat.from(this)
+
+		findViewById<Button>(R.id.btn_search).setOnClickListener({
+			val query = findViewById<EditText>(R.id.et_search).text.toString()
+			val address = "http://google.com/search?q=$query"
+			val intent = Intent("android.intent.action.VIEW", Uri.parse(address))
+			if (intent.resolveActivity(getPackageManager()) != null) 
+				startActivity(intent)
+		})
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -37,10 +48,10 @@ class MainActivity : Activity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         button.text = "10"
-        object :CountDownTimer(10000, 1000) {
+        object :CountDownTimer(10000, 16) {
             override fun onTick(left: Long) {
                 button.text = "${left/1000}"
-                ++progressBar.progress
+                progressBar.progress += 17
             }
 
             override fun onFinish() {
@@ -49,7 +60,7 @@ class MainActivity : Activity() {
             }
         }.start()
 
-        with(Handler(Looper.getMainLooper())) {
+        with(Handler()) {
             post({ button.isEnabled = false })
             postDelayed({ notificationManager?.run { notify(0, notification!!) } }, 10000)
             postDelayed({ button.isEnabled = true }, 10000)
