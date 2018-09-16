@@ -2,7 +2,12 @@ package com.example.tigr.lab1
 
 import android.app.Activity
 import android.app.Notification
+import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -11,10 +16,8 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.view.View
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.EditText
-import android.content.Intent
-import android.net.Uri
+import android.widget.ProgressBar
 
 class MainActivity : Activity() {
     private var notificationManager: NotificationManagerCompat?= null
@@ -24,14 +27,24 @@ class MainActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val builder = NotificationCompat.Builder(this, "").apply{
+		var nChannelId = ""
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			val notificationChannel = NotificationChannel("com.example.tigr.lab1", 
+				"Lab1", NotificationManager.IMPORTANCE_DEFAULT)
+			notificationChannel.setDescription("Notification channel for Lab1 application")
+			val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+			notificationManager.createNotificationChannel(notificationChannel)
+			nChannelId = notificationChannel.id
+		} 
+		notificationManager = NotificationManagerCompat.from(this)
+        notification = NotificationCompat.Builder(this, nChannelId).apply{
             setContentTitle("Test notification")
             setContentText("This is a test notification!")
             setSmallIcon(android.R.drawable.ic_notification_clear_all)
             priority = NotificationCompat.PRIORITY_DEFAULT
-        }
-        notification = builder.build()
-        notificationManager = NotificationManagerCompat.from(this)
+        }.build()
+        //notification = builder.build()
+		//notificationManager.createNotificationChannel()
 
 		findViewById<Button>(R.id.btn_search).setOnClickListener({
 			val query = findViewById<EditText>(R.id.et_search).text.toString()
