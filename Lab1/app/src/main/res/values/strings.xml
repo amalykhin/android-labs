@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Lab1</string>
-    <string name="notif">Push-notify</string>
-    <string name="search">Search</string>
-    <string name="fcam">Front camera</string>
-    <string name="bcam">Back camera</string>
-    <string name="camera">Launch camera</string>
-    <string name="browse">Browse pictures</string>
+    <string name="action_notify">Push-notify</string>
+    <string name="action_search">Search</string>
+    <string name="camera_front">Front camera</string>
+    <string name="camera_back">Back camera</string>
+    <string name="action_shoot">Launch camera</string>
+    <string name="action_browse">Rave</string>
+    <string name="notif_channel_id">com.example.tigr.lab1</string>
+    <string name="notif_channel_name">Lab1</string>
 </resources>
